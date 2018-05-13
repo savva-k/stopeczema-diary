@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import ButtonAppBar from './AppBar';
 
 class App extends Component {

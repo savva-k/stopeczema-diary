@@ -47,7 +47,7 @@ class ButtonAppBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               StopEczema
             </Typography>
-            <Button color="inherit">Login</Button>
+            {/* {<Button color="inherit">Log</Button>} */}
           </Toolbar>
         </AppBar>
       </div>
