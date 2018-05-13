@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+import ButtonAppBar from './AppBar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Stopeczema App</h1>
+        <ButtonAppBar />
       </div>
     );
   }
