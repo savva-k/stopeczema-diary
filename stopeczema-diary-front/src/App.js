@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
-import ButtonAppBar from './AppBar';
+import React, { Component } from 'react'
+import Header from './components/Layouts/Header'
+
+const styles = {
+  container: {
+    width: 1280,
+    margin: '0 auto',
+  },
+}
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <ButtonAppBar />
+        <div className="container" style={styles.container}>
+          <Header />
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
