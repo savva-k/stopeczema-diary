@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ChipsRepository extends CrudRepository<Chip, Long> {
     List<Chip> findByType(String type);
+    List<Chip> findByTextContaining(String text);
 }

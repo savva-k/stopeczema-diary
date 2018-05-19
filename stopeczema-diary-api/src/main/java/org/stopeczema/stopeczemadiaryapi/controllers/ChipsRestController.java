@@ -27,6 +27,11 @@ public class ChipsRestController {
         return chipsRepository.findByType(chipType);
     }
 
+    @GetMapping("/search/{searchTerm}")
+    Collection<Chip> findChipsByTextContaining(@PathVariable String searchTerm) {
+        return chipsRepository.findByTextContaining(searchTerm);
+    }
+
     @PostMapping
     void addChip(@RequestBody Chip chip) {
         chipsRepository.save(chip);
