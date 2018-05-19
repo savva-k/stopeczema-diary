@@ -32,7 +32,8 @@ The application constists of 2 subprojects:
 
 ### Running back-end
 
-  * For now it can be run from your favorite IDE. Simply run `clean` and `build` Gradle tasks, then run `StopeczemaDiaryApiApplication` class.
+  * From your favorite IDE: simply run `clean` and `build` Gradle tasks, then run `StopeczemaDiaryApiApplication` class.
+  * From the command line: navigate to the `stopeczema-diary-api` directory, run `./gradlew bootRun`
 
 ### Running front-end
 
