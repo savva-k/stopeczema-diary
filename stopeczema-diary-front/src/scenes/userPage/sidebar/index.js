@@ -4,16 +4,15 @@ import List from '@material-ui/core/List'
 
 import NavLink from 'react-router-dom/NavLink'
 
-import HomeItem from './Items/Home'
-import FriendsItem from './Items/Friends'
-import SearchItem from './Items/Search'
-import SettingsItem from './Items/Settings'
-import UnicornItem from './Items/Unicorn'
+import {
+  HomeItem,
+  FriendsItem,
+  SearchItem,
+  SettingsItem,
+  UnicornItem,
+} from './Items/'
 
 class Sidebar extends React.Component {
-  handleItemClick = () => {
-    console.log('CLICK!!!')
-  }
   render() {
     return (
       <Fragment>

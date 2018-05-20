@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import Header from './components/Layouts/Header'
+import UserPage from './scenes/userPage/'
+import LoginPage from './scenes/loginPage'
+
+let isLogin = true
 
 const styles = {
   container: {
@@ -13,7 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container" style={styles.container}>
-          <Header />
+          {isLogin ? <UserPage /> : <LoginPage />}
         </div>
       </div>
     )

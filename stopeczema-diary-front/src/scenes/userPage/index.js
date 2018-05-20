@@ -2,17 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Sidebar from '../Exercises/Sidebar/Sidebar'
 
-import Home from './mainContent/Home'
-import Friends from './mainContent/Friends'
-import Search from './mainContent/Search'
-import Settings from './mainContent/Settings'
-import Unicorn from './mainContent/Unicorn'
+// Custom components
+import Sidebar from './sidebar'
+import Header from './header'
+import { Home, Friends, Search, Settings, Unicorn } from './mainContent'
 
+// Router components
 const ReactRouter = require('react-router-dom')
 const Router = ReactRouter.BrowserRouter
 const Route = ReactRouter.Route
@@ -31,6 +27,7 @@ const styles = theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: '#2196F3',
   },
   drawerPaper: {
     position: 'relative',
@@ -45,18 +42,12 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 })
 
-function ClippedDrawer(props) {
+function UserPage(props) {
   const { classes } = props
   return (
     <Router>
       <div className={classes.root}>
-        <AppBar position="absolute" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="title" color="inherit" noWrap>
-              StopEczema-diary
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Header classes={classes} />
         <Drawer
           variant="permanent"
           classes={{
@@ -86,8 +77,8 @@ function ClippedDrawer(props) {
   )
 }
 
-ClippedDrawer.propTypes = {
+UserPage.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ClippedDrawer)
+export default withStyles(styles)(UserPage)
