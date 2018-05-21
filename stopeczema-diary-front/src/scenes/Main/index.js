@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // Custom components
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
-import { Home, Friends, Search, Settings, Unicorn } from './scenes'
+import { Home, Friends, Search, Settings, Unicorn, Error404 } from './scenes'
 
 const drawerWidth = 240
 
@@ -60,11 +60,7 @@ function UserPage(props) {
             <Route path="/settings" component={Settings} />
             <Route path="/search" component={Search} />
             <Route path="/unicorn" component={Unicorn} />
-            <Route
-              render={function() {
-                return <p>Not Found</p>
-              }}
-            />
+            <Route exact path="*" component={Error404} />
           </Switch>
         </main>
       </div>
