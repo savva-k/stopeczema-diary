@@ -2,17 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 // Custom components
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import { Home, Friends, Search, Settings, Unicorn } from './scenes'
-
-// Router components
-const ReactRouter = require('react-router-dom')
-const Router = ReactRouter.BrowserRouter
-const Route = ReactRouter.Route
-const Switch = ReactRouter.Switch
 
 const drawerWidth = 240
 
