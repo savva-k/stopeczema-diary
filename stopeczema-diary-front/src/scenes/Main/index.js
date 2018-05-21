@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 
 // Custom components
-import Sidebar from './sidebar'
-import Header from './header'
-import { Home, Friends, Search, Settings, Unicorn } from './mainContent'
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+import { Home, Friends, Search, Settings, Unicorn } from './scenes'
 
 // Router components
 const ReactRouter = require('react-router-dom')

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import UserPage from './scenes/userPage/'
-import LoginPage from './scenes/loginPage'
+import UserPage from './scenes/Main/'
+import LoginPage from './scenes/Sign/scenes/Login'
 
 let isLogin = true
 

@@ -10,7 +10,7 @@ import {
   SearchItem,
   SettingsItem,
   UnicornItem,
-} from './Items/'
+} from './components/'
 
 class Sidebar extends React.Component {
   render() {
