@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.stopeczema.stopeczemadiaryapi.beans.Chip;
-import org.stopeczema.stopeczemadiaryapi.repositories.ChipsRepository;
+import org.stopeczema.stopeczemadiaryapi.dto.ChipDTO;
+import org.stopeczema.stopeczemadiaryapi.services.ChipService;
 
 import java.util.Collection;
 
@@ -20,20 +21,20 @@ import java.util.Collection;
 public class ChipsRestController {
 
     @Autowired
-    private ChipsRepository chipsRepository;
+    private ChipService chipService;
 
     @GetMapping("/{chipType}")
     Collection<Chip> getChipsByType(@PathVariable String chipType) {
-        return chipsRepository.findByType(chipType);
+        return chipService.findByType(chipType);
     }
 
     @GetMapping("/search/{searchTerm}")
     Collection<Chip> findChipsByTextContaining(@PathVariable String searchTerm) {
-        return chipsRepository.findByTextContaining(searchTerm);
+        return chipService.findByText(searchTerm);
     }
 
     @PostMapping
-    void addChip(@RequestBody Chip chip) {
-        chipsRepository.save(chip);
+    void addChip(@RequestBody ChipDTO chipDTO) {
+        chipService.save(chipDTO);
     }
 }
