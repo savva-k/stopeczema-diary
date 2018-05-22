@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * <p>A JPA entity that represents a chip that is used as:
@@ -31,6 +33,10 @@ public class Chip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(min = 2, max = 100, message = "The field type must contain from 2 to 100 characters")
     private String type;
+    @NotNull
+    @Size(min = 2, max = 150, message = "The field text must contain from 2 to 150 characters")
     private String text;
 }
