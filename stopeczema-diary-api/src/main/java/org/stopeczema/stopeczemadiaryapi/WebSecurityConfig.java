@@ -1,9 +1,11 @@
 package org.stopeczema.stopeczemadiaryapi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,20 +21,23 @@ import java.util.Arrays;
 @Profile("dev")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private AppUserDetailsService appUserDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and()
+        http.csrf().disable().cors().and().formLogin().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/chips/*").anonymous()
+                .antMatchers(HttpMethod.GET, "/chips/*").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/chips").anonymous()
                 .antMatchers(HttpMethod.GET, "/users").anonymous()
                 .antMatchers(HttpMethod.GET, "/users/*").anonymous()
-                .antMatchers(HttpMethod.GET, "/users/search").anonymous()
-                .antMatchers(HttpMethod.GET, "/users/search/**").anonymous();
+                .antMatchers(HttpMethod.GET, "/users/search").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/users/search/**").hasRole("ADMIN");
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
@@ -48,4 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(appUserDetailsService);
+    }
 }
