@@ -24,7 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().cors().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/chips/*").anonymous()
-                .antMatchers(HttpMethod.POST, "/chips").anonymous();
+                .antMatchers(HttpMethod.POST, "/chips").anonymous()
+                .antMatchers(HttpMethod.GET, "/users").anonymous()
+                .antMatchers(HttpMethod.GET, "/users/*").anonymous()
+                .antMatchers(HttpMethod.GET, "/users/search").anonymous()
+                .antMatchers(HttpMethod.GET, "/users/search/**").anonymous();
     }
 
     @Bean
