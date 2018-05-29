@@ -24,7 +24,7 @@ The application constists of 2 subprojects:
   * `docker stop stopeczema-psql`
   * `docker start stopeczema-psql`
 
-### Inslall Lombok for your Java IDE
+### Install Lombok for your Java IDE
 
   Here are the guides for [Ecliplse](https://projectlombok.org/setup/eclipse) and [IDEA](https://projectlombok.org/setup/intellij).
 
