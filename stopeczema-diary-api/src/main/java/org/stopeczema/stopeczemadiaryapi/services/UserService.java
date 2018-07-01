@@ -2,13 +2,13 @@ package org.stopeczema.stopeczemadiaryapi.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.stopeczema.stopeczemadiaryapi.beans.User;
+import org.stopeczema.stopeczemadiaryapi.beans.UserEntity;
 import org.stopeczema.stopeczemadiaryapi.dto.UserDTO;
 import org.stopeczema.stopeczemadiaryapi.repositories.UserRepository;
 import org.stopeczema.stopeczemadiaryapi.services.exceptions.UserExistsException;
-import org.stopeczema.stopeczemadiaryapi.services.exceptions.UserNotFoundException;
 
 /**
  * @author Savva Kodeikin
@@ -27,24 +27,24 @@ public class UserService {
 
     public UserDTO registerNewUser(UserDTO userDTO) throws UserExistsException {
         if (isUserAlreadyExists(userDTO)) {
-            throw new UserExistsException("User with this email already exists!");
+            throw new UserExistsException("UserEntity with this email already exists!");
         }
 
-        User user = modelMapper.map(userDTO, User.class);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
+        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.setEnabled(true);
 
-        return modelMapper.map(userRepository.save(user), UserDTO.class);
+        return modelMapper.map(userRepository.save(userEntity), UserDTO.class);
     }
 
     public UserDTO findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
+        UserEntity userEntity = userRepository.findByEmail(email);
 
-        if (user == null) {
-            throw new UserNotFoundException("User not found!");
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("Invalid credentials");
         }
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(userEntity, UserDTO.class);
     }
 
     private boolean isUserAlreadyExists(UserDTO userDTO) {

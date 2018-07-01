@@ -20,7 +20,7 @@ import org.stopeczema.stopeczemadiaryapi.services.UserService;
 @RequestMapping("/users")
 public class UsersRestController {
 
-    private static final String SUCCESSFULLY_CREATED = "User has been successfully created";
+    private static final String SUCCESSFULLY_CREATED = "UserEntity has been successfully created";
 
     @Autowired
     private UserService userService;

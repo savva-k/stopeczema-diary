@@ -24,7 +24,7 @@ import java.util.List;
 @ToString(exclude = { "password", "matchingPassword" })
 @Entity
 @Table(name = "se_user")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

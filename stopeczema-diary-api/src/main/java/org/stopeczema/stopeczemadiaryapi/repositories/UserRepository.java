@@ -1,11 +1,11 @@
 package org.stopeczema.stopeczemadiaryapi.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import org.stopeczema.stopeczemadiaryapi.beans.User;
+import org.stopeczema.stopeczemadiaryapi.beans.UserEntity;
 
 /**
  * @author Savva Kodeikin
  */
-public interface UserRepository extends CrudRepository<User, String> {
-    User findByEmail(String email);
+public interface UserRepository extends CrudRepository<UserEntity, String> {
+    UserEntity findByEmail(String email);
 }
