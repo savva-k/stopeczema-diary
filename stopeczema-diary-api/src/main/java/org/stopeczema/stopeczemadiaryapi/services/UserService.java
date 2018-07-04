@@ -5,16 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.stopeczema.stopeczemadiaryapi.beans.Authority;
 import org.stopeczema.stopeczemadiaryapi.beans.UserEntity;
 import org.stopeczema.stopeczemadiaryapi.dto.UserDTO;
 import org.stopeczema.stopeczemadiaryapi.repositories.UserRepository;
 import org.stopeczema.stopeczemadiaryapi.services.exceptions.UserExistsException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Savva Kodeikin
  */
 @Service
 public class UserService {
+
+    private static final String DEFAULT_ROLE = "ROLE_USER";
 
     @Autowired
     private UserRepository userRepository;
@@ -33,6 +39,8 @@ public class UserService {
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setEnabled(true);
+        userRepository.save(userEntity);
+        userEntity.setAuthorities(generateDefaultAuthorities(userEntity));
 
         return modelMapper.map(userRepository.save(userEntity), UserDTO.class);
     }
@@ -49,5 +57,14 @@ public class UserService {
 
     private boolean isUserAlreadyExists(UserDTO userDTO) {
         return userRepository.findByEmail(userDTO.getEmail()) != null;
+    }
+
+    private List<Authority> generateDefaultAuthorities(UserEntity userEntity) {
+        List<Authority> authorities = new ArrayList<>();
+        Authority authority = new Authority();
+        authority.setAuthority(DEFAULT_ROLE);
+        authority.setUserId(userEntity.getId());
+        authorities.add(authority);
+        return authorities;
     }
 }

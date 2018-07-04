@@ -3,6 +3,7 @@ package org.stopeczema.stopeczemadiaryapi.beans;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class UserEntity {
     @Size(min = 5, max = 100, message = "The email must contain from 5 to 150 symbols")
     private String email;
     private Boolean enabled;
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Authority.class)
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Authority.class, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "userId")
     private List<Authority> authorities;
 
