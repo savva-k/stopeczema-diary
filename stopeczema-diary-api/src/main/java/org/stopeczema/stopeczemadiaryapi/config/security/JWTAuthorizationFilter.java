@@ -11,9 +11,11 @@ import org.stopeczema.stopeczemadiaryapi.common.Constants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Savva Kodeikin
@@ -35,10 +37,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        String authorizationHeader = request.getHeader(Constants.AUTHORIZATION);
+        String token = getTokenFromRequest(request.getCookies());
 
-        if (authorizationHeader != null && authorizationHeader.startsWith(Constants.BEARER)) {
-            UsernamePasswordAuthenticationToken usernamePasswordAuth = getUserToken(authorizationHeader);
+        if (token != null) {
+            UsernamePasswordAuthenticationToken usernamePasswordAuth = getUserToken(token);
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuth);
         }
 
@@ -46,8 +48,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getUserToken(String token) {
-        token = token.replace(Constants.BEARER, "");
-
         String username = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
@@ -59,6 +59,18 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (userDetails != null) {
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails
                     .getAuthorities());
+        }
+
+        return null;
+    }
+
+    private String getTokenFromRequest(Cookie[] cookies) {
+        if (cookies != null) {
+            return Arrays.stream(cookies)
+                    .filter(cookie -> Constants.TOKEN.equals(cookie.getName()))
+                    .findFirst()
+                    .map(cookie -> cookie.getValue())
+                    .orElse(null);
         }
 
         return null;

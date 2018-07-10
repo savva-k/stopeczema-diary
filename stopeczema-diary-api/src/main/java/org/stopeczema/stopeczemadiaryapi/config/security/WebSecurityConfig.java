@@ -12,13 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.stopeczema.stopeczemadiaryapi.AppUserDetailsService;
-import org.stopeczema.stopeczemadiaryapi.config.security.JWTAuthenticationFilter;
-import org.stopeczema.stopeczemadiaryapi.config.security.JWTAuthorizationFilter;
 
 import java.util.Arrays;
 
@@ -33,9 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AppUserDetailsService appUserDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Value("${jwt.secret}")
     private String secret;
 
@@ -44,14 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/chips/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/chips/*").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/chips").anonymous()
                 .antMatchers(HttpMethod.GET, "/users").anonymous()
                 .antMatchers(HttpMethod.GET, "/users/*").anonymous()
                 .antMatchers(HttpMethod.GET, "/users/search").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/search/**").hasRole("ADMIN")
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), passwordEncoder, secret))
+                .addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), secret))
                 .addFilter(new JWTAuthorizationFilter(authenticationManagerBean(), appUserDetailsService, secret));
     }
 

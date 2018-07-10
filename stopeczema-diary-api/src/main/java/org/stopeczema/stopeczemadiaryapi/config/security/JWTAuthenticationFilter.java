@@ -8,13 +8,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.stopeczema.stopeczemadiaryapi.common.Constants;
 import org.stopeczema.stopeczemadiaryapi.dto.UserDTO;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,16 +28,15 @@ import java.util.Date;
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static final int MILLIS_IN_SECOND = 1000;
+
     private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
 
     private String secret;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                                   String secret) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secret) {
 
         this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
         this.secret = secret;
     }
 
@@ -70,6 +69,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
 
-        response.addHeader(Constants.AUTHORIZATION, Constants.BEARER + token);
+        response.addCookie(createCookie(token));
+    }
+
+    private Cookie createCookie(String token) {
+        Cookie cookie = new Cookie(Constants.TOKEN, token);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(Math.toIntExact(Constants.TOKEN_LIFETIME / MILLIS_IN_SECOND));
+        return cookie;
     }
 }
