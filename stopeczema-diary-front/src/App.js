@@ -6,7 +6,6 @@ let isLogin = true
 
 const styles = {
   container: {
-    width: 1280,
     margin: '0 auto',
   },
 }

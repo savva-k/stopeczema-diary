@@ -8,7 +8,7 @@ import HeaderAvatar from './HeaderAvatar'
 export default function(props) {
   return (
     <AppBar position="absolute" className={props.classes.appBar}>
-      <Toolbar style={{ minHeight: 65 }}>
+      <Toolbar>
         <Typography variant="title" color="inherit" noWrap>
           StopEczema-diary
         </Typography>
