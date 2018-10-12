@@ -18,7 +18,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "printWidth": 120
   },
   "scripts": {
     "start": "react-scripts start",
