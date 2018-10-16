@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/chips/*").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/chips").anonymous()
                 .antMatchers(HttpMethod.GET, "/users").anonymous()
-                .antMatchers(HttpMethod.GET, "/users/*").anonymous()
+                .antMatchers(HttpMethod.GET, "/users/current").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/search").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/search/**").hasRole("ADMIN")
                 .and()
