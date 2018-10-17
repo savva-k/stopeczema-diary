@@ -1,6 +1,6 @@
 package org.stopeczema.stopeczemadiaryapi.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -16,9 +16,9 @@ public class UserDTO {
     private String username;
     private String firstName;
     private String lastName;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String matchingPassword;
     private String email;
     private Boolean enabled;
