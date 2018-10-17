@@ -2,10 +2,6 @@ import React from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <AppBar position="absolute" className={this.props.classes.appBar}>

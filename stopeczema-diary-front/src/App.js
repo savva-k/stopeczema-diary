@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
+import { Route, withRouter } from 'react-router-dom'
 import UserPage from './scenes/Main/'
 import LoginPage from './scenes/Sign/'
-
-let isLogin = false
 
 const styles = {
   container: {
@@ -12,13 +11,28 @@ const styles = {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { user: null }
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8081/api/users/current', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        this.setState(data)
+        this.props.history.push(data.user ? '/app' : '/auth')
+      })
+  }
+
   render() {
     return (
       <div className="container" style={styles.container}>
-        {isLogin ? <UserPage /> : <LoginPage />}
+        <Route path="/app" component={UserPage} />
+        <Route path="/auth" component={LoginPage} />
       </div>
     )
   }
 }
 
-export default App
+export default withRouter(App)

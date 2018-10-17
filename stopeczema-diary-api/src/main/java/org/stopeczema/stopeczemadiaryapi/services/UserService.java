@@ -1,7 +1,11 @@
 package org.stopeczema.stopeczemadiaryapi.services;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ import java.util.List;
  */
 @Service
 public class UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
 
@@ -53,6 +59,23 @@ public class UserService {
         }
 
         return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+    public UserDTO getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDTO result = null;
+
+        try {
+            UserDetails userDetails = (UserDetails) principal;
+            UserEntity userEntity = userRepository.findByEmail(userDetails.getUsername());
+            if (userEntity != null) {
+                result = modelMapper.map(userEntity, UserDTO.class);
+            }
+        } catch (ClassCastException e) {
+            logger.debug("Cannot cast " + principal + " to UserDetails - possibly anonymous user");
+        }
+
+        return result;
     }
 
     private boolean isUserAlreadyExists(UserDTO userDTO) {

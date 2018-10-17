@@ -35,13 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable()
+        http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/chips/*").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/chips").anonymous()
                 .antMatchers(HttpMethod.GET, "/users").anonymous()
-                .antMatchers(HttpMethod.GET, "/users/*").anonymous()
+                .antMatchers(HttpMethod.GET, "/users/current").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/search").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/search/**").hasRole("ADMIN")
                 .and()
