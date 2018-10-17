@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { Login, Registration, ForgottenPassword } from './scenes'
 import Header from './components/Header'
 import { withStyles, Grid } from '@material-ui/core'
@@ -30,23 +30,19 @@ class Sign extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <Router>
-        <div className={classes.root}>
-          <Header classes={classes} />
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Grid container justify="center">
-              <Grid item xs={6} lg={6}>
-                <Switch>
-                  <Route exact path="/" component={Login} />
-                  <Route exact path="/forgot-password" component={ForgottenPassword} />
-                  <Route exact path="/sign-up" component={Registration} />
-                </Switch>
-              </Grid>
+      <div className={classes.root}>
+        <Header classes={classes} />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Grid container justify="center">
+            <Grid item xs={6} lg={6}>
+              <Route exact path="/auth" component={Login} />
+              <Route exact path="/auth/forgot-password" component={ForgottenPassword} />
+              <Route exact path="/auth/sign-up" component={Registration} />
             </Grid>
-          </main>
-        </div>
-      </Router>
+          </Grid>
+        </main>
+      </div>
     )
   }
 }

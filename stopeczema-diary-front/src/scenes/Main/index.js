@@ -6,7 +6,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Grid from '@material-ui/core/Grid'
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 // Custom components
 import Sidebar from './components/Sidebar'
@@ -41,41 +41,39 @@ const styles = theme => ({
 function UserPage(props) {
   const { classes } = props
   return (
-    <Router>
-      <div className={classes.root}>
-        <Grid container alignItems="stretch">
-          <Grid item xs={12} lg={12}>
-            <Header classes={classes}/>
-          </Grid>
-          <Hidden smDown>
-            <Grid item xs={12} lg={3}>
-              <Drawer
-                variant="permanent"
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-              >
-                <div className={classes.toolbar} />
-                <Sidebar />
-              </Drawer>
-            </Grid>
-          </Hidden>
-          <Grid item xs={12} lg={9}>
-            <main className={classes.content}>
-              <div className={classes.toolbar} />
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/friends" component={Friends} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/search" component={Search} />
-                <Route path="/unicorn" component={Unicorn} />
-                <Route exact path="*" component={Error404} />
-              </Switch>
-            </main>
-          </Grid>
+    <div className={classes.root}>
+      <Grid container alignItems="stretch">
+        <Grid item xs={12} lg={12}>
+          <Header classes={classes}/>
         </Grid>
-      </div>
-    </Router>
+        <Hidden smDown>
+          <Grid item xs={12} lg={3}>
+            <Drawer
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <div className={classes.toolbar} />
+              <Sidebar />
+            </Drawer>
+          </Grid>
+        </Hidden>
+        <Grid item xs={12} lg={9}>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Switch>
+              <Route exact path="/app" component={Home} />
+              <Route exact path="/app/friends" component={Friends} />
+              <Route path="/app/settings" component={Settings} />
+              <Route path="/app/search" component={Search} />
+              <Route path="/app/unicorn" component={Unicorn} />
+              <Route exact path="/app/*" component={Error404} />
+            </Switch>
+          </main>
+        </Grid>
+      </Grid>
+    </div>
   )
 }
 

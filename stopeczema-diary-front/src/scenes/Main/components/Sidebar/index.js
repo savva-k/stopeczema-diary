@@ -17,22 +17,22 @@ class Sidebar extends React.Component {
     return (
       <Fragment>
         <List component="nav">
-          <NavLink exact activeClassName="active" to="/">
+          <NavLink exact activeClassName="active" to="/app">
             <HomeItem />
           </NavLink>
-          <NavLink exact activeClassName="active" to="/friends">
+          <NavLink exact activeClassName="active" to="/app/friends">
             <FriendsItem />
           </NavLink>
-          <NavLink exact activeClassName="active" to="/search">
+          <NavLink exact activeClassName="active" to="/app/search">
             <SearchItem />
           </NavLink>
         </List>
         <Divider />
         <List component="nav">
-          <NavLink exact activeClassName="active" to="/settings">
+          <NavLink exact activeClassName="active" to="/app/settings">
             <SettingsItem />
           </NavLink>
-          <NavLink exact activeClassName="active" to="/unicorn">
+          <NavLink exact activeClassName="active" to="/app/unicorn">
             <UnicornItem />
           </NavLink>
         </List>
