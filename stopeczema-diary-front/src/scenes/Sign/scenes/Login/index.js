@@ -1,5 +1,6 @@
 import React from 'react'
-import { withStyles, Paper, Grid, TextField, Button } from '@material-ui/core'
+import Zoom from '@material-ui/core/Zoom'
+import { withStyles, Paper, Grid, TextField, Button, Typography } from '@material-ui/core'
 
 const styles = theme => ({
   loginForm: {
@@ -16,15 +17,15 @@ const styles = theme => ({
     width: '100%',
   },
 
-  button: {
-    marginTop: '20px',
+  error: {
+    color: 'salmon',
   },
 })
 
 class Login extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { login: '', password: '' }
+    this.state = { login: '', password: '', error: false }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleLoginChange = this.handleLoginChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
@@ -39,22 +40,24 @@ class Login extends React.Component {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-      credentials: 'include'
-    }).then(res => {
-      if (res.status === 200) {
-        this.props.history.replace('/app')
-      } else {
-        throw new Error('Unauthorized')
-      }
+      credentials: 'include',
     })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.replace('/app')
+        } else {
+          throw new Error('Unauthorized')
+        }
+      })
+      .catch(e => this.setState({ login: this.state.login, password: '', error: true }))
   }
 
   handleLoginChange(event) {
-    this.setState({ login: event.target.value, password: this.state.password })
+    this.setState({ login: event.target.value, password: this.state.password, error: false })
   }
 
   handlePasswordChange(event) {
-    this.setState({ login: this.state.login, password: event.target.value })
+    this.setState({ login: this.state.login, password: event.target.value, error: false })
   }
 
   render() {
@@ -83,6 +86,11 @@ class Login extends React.Component {
               className={classes.textField}
               type="password"
             />
+          </Grid>
+          <Grid item className={classes.loginFormGridRow}>
+            <Zoom in={this.state.error}>
+              <Typography className={classes.error}>Invalid credentials. Please try again.</Typography>
+            </Zoom>
           </Grid>
           <Grid item className={classes.loginFormGridRow}>
             <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSubmit}>
