@@ -3,11 +3,11 @@ import Zoom from '@material-ui/core/Zoom'
 import { withStyles, Paper, Grid, TextField, Button, Typography } from '@material-ui/core'
 
 const styles = theme => ({
-  loginForm: {
+  loginFormContainer: {
     padding: '3px 15px 15px 15px',
   },
 
-  loginFormGridRow: {
+  loginForm: {
     textAlign: 'center',
     width: '50%',
     marginBottom: '10px',
@@ -17,7 +17,12 @@ const styles = theme => ({
     width: '100%',
   },
 
+  submitButton: {
+    marginTop: '10px',
+  },
+
   error: {
+    marginTop: '10px',
     color: 'salmon',
   },
 })
@@ -31,8 +36,8 @@ class Login extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
 
-  handleSubmit() {
-    // this.props.history.replace('/app')
+  handleSubmit(event) {
+    event.preventDefault()
     const { login, password } = this.state
     const payload = { email: login, password: password }
 
@@ -63,40 +68,48 @@ class Login extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <Paper className={classes.loginForm}>
+      <Paper className={classes.loginFormContainer}>
         <Grid container direction="column" alignItems="center" justify="space-between">
-          <Grid item className={classes.loginFormGridRow}>
-            <h1>Login</h1>
-          </Grid>
-          <Grid item className={classes.loginFormGridRow}>
-            <TextField
-              id="login"
-              label="Login"
-              value={this.state.login}
-              onChange={this.handleLoginChange}
-              className={classes.textField}
-            />
-          </Grid>
-          <Grid item className={classes.loginFormGridRow}>
-            <TextField
-              id="password"
-              label="Password"
-              value={this.state.password}
-              onChange={this.handlePasswordChange}
-              className={classes.textField}
-              type="password"
-            />
-          </Grid>
-          <Grid item className={classes.loginFormGridRow}>
-            <Zoom in={this.state.error}>
-              <Typography className={classes.error}>Invalid credentials. Please try again.</Typography>
-            </Zoom>
-          </Grid>
-          <Grid item className={classes.loginFormGridRow}>
-            <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSubmit}>
-              Submit
-            </Button>
-          </Grid>
+          <form className={classes.loginForm}>
+            <Grid item>
+              <h1>Login</h1>
+            </Grid>
+            <Grid item>
+              <TextField
+                id="login"
+                label="Login"
+                value={this.state.login}
+                onChange={this.handleLoginChange}
+                className={classes.textField}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="password"
+                label="Password"
+                value={this.state.password}
+                onChange={this.handlePasswordChange}
+                className={classes.textField}
+                type="password"
+              />
+            </Grid>
+            <Grid item>
+              <Zoom in={this.state.error}>
+                <Typography className={classes.error}>Invalid credentials. Please try again.</Typography>
+              </Zoom>
+            </Grid>
+            <Grid item>
+              <Button
+                type="submit"
+                variant="outlined"
+                color="primary"
+                className={classes.submitButton}
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </form>
         </Grid>
       </Paper>
     )
