@@ -1,6 +1,7 @@
 import React from 'react'
 import Zoom from '@material-ui/core/Zoom'
 import { withStyles, Paper, Grid, TextField, Button, Typography } from '@material-ui/core'
+import Link from 'react-router-dom/Link'
 
 const styles = theme => ({
   loginFormContainer: {
@@ -17,7 +18,7 @@ const styles = theme => ({
     width: '100%',
   },
 
-  submitButton: {
+  actionButton: {
     marginTop: '10px',
   },
 
@@ -103,11 +104,17 @@ class Login extends React.Component {
                 type="submit"
                 variant="outlined"
                 color="primary"
-                className={classes.submitButton}
+                className={classes.actionButton}
                 onClick={this.handleSubmit}
               >
                 Submit
               </Button>
+
+              <Link to="/auth/sign-up">
+                <Button variant="flat" className={classes.actionButton}>
+                  Sign up
+                </Button>
+              </Link>
             </Grid>
           </form>
         </Grid>
