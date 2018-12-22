@@ -43,11 +43,11 @@ function UserPage(props) {
   return (
     <div className={classes.root}>
       <Grid container alignItems="stretch">
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={12} md={12}>
           <Header classes={classes}/>
         </Grid>
         <Hidden smDown>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} md={3}>
             <Drawer
               variant="permanent"
               classes={{
@@ -59,7 +59,7 @@ function UserPage(props) {
             </Drawer>
           </Grid>
         </Hidden>
-        <Grid item xs={12} lg={9}>
+        <Grid item xs={12} md={9}>
           <main className={classes.content}>
             <div className={classes.toolbar} />
             <Switch>
