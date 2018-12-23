@@ -1,10 +1,8 @@
 import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import classNames from 'classnames'
-import { Manager, Target, Popper } from 'react-popper'
+import { Popper } from '@material-ui/core'
+import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state/index'
 import Button from '@material-ui/core/Button'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grow from '@material-ui/core/Grow'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
@@ -18,41 +16,25 @@ const styles = theme => ({
   popperClose: {
     pointerEvents: 'none',
   },
+  popper: {
+    /* this was so dirty... */
+    zIndex: 9989,
+  },
+  headerMenuButton: {
+    position: 'absolute',
+    top: '4px',
+    right: '4px',
+  },
 })
 
 class HeaderAvatar extends React.Component {
-  state = {
-    open: false,
-  }
-
-  handleToggle = () => {
-    this.setState({ open: !this.state.open })
-  }
-
-  handleClose = event => {
-    if (this.target1.contains(event.target)) {
-      return
-    }
-
-    this.setState({ open: false })
-  }
   render() {
     const { classes } = this.props
-    const { open } = this.state
     return (
-      <Manager style={{ position: 'absolute', right: 4, top: 4 }}>
-        <Target>
-          <div
-            ref={node => {
-              this.target1 = node
-            }}
-          >
-            <Button
-              variant="flat"
-              aria-owns={open ? 'menu-list-grow' : null}
-              aria-haspopup="true"
-              onClick={this.handleToggle}
-            >
+      <PopupState variant="popover" popupId="headerMenu">
+        {popupState => (
+          <React.Fragment>
+            <Button variant="flat" className={classes.headerMenuButton} {...bindToggle(popupState)}>
               <Typography
                 variant="subheading"
                 style={{
@@ -67,31 +49,17 @@ class HeaderAvatar extends React.Component {
               </Typography>
               <Avatar alt="avatar" src="/static/images/gorl.jpg" />
             </Button>
-          </div>
-        </Target>
-        <Popper
-          placement="bottom-start"
-          eventsEnabled={open}
-          className={classNames({ [classes.popperClose]: !open })}
-        >
-          <ClickAwayListener onClickAway={this.handleClose}>
-            <Grow
-              in={open}
-              id="menu-list-grow"
-              style={{ transformOrigin: '0 0 0' }}
-            >
+            <Popper className={classes.popper} {...bindPopper(popupState)}>
               <Paper>
                 <MenuList role="menu">
-                  <MenuItem onClick={this.handleClose}>
-                    Profile settings
-                  </MenuItem>
-                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                  <MenuItem>Profile settings</MenuItem>
+                  <MenuItem>Logout</MenuItem>
                 </MenuList>
               </Paper>
-            </Grow>
-          </ClickAwayListener>
-        </Popper>
-      </Manager>
+            </Popper>
+          </React.Fragment>
+        )}
+      </PopupState>
     )
   }
 }
