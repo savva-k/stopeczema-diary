@@ -23,6 +23,10 @@ class App extends Component {
         this.setState(data)
         this.props.history.push(data.user ? '/app' : '/auth')
       })
+      .catch(e => {
+        this.setState({ user: null })
+        this.props.history.push('/auth')
+      })
   }
 
   render() {
