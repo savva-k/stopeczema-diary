@@ -111,7 +111,7 @@ class Login extends React.Component {
               </Button>
 
               <Link to="/auth/sign-up">
-                <Button variant="flat" className={classes.actionButton}>
+                <Button variant="text" className={classes.actionButton}>
                   Sign up
                 </Button>
               </Link>

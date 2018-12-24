@@ -34,7 +34,7 @@ class HeaderAvatar extends React.Component {
       <PopupState variant="popover" popupId="headerMenu">
         {popupState => (
           <React.Fragment>
-            <Button variant="flat" className={classes.headerMenuButton} {...bindToggle(popupState)}>
+            <Button variant="text" className={classes.headerMenuButton} {...bindToggle(popupState)}>
               <Typography
                 variant="subheading"
                 style={{
