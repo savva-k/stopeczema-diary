@@ -16,17 +16,24 @@ import { Home, Friends, Search, Settings, Unicorn, Error404 } from './scenes'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
+    height: '100%',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: '#2196F3',
   },
+  drawer: {
+    height: '100%',
+    flexShrink: 0,
+  },
   drawerPaper: {
     position: 'relative',
+  },
+  contentWrapper: {
+    height: '100%',
   },
   content: {
     flexGrow: 1,
@@ -35,6 +42,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     minWidth: 0, // So the Typography noWrap works
   },
+  sidebar: {
+    height: '100%',
+  },
   toolbar: theme.mixins.toolbar,
 })
 
@@ -42,14 +52,15 @@ function UserPage(props) {
   const { classes } = props
   return (
     <div className={classes.root}>
-      <Grid container alignItems="stretch">
+      <Grid container>
         <Grid item xs={12} md={12}>
           <Header classes={classes}/>
         </Grid>
         <Hidden smDown>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={3} className={classes.sidebar}>
             <Drawer
               variant="permanent"
+              className={classes.drawer}
               classes={{
                 paper: classes.drawerPaper,
               }}
@@ -59,7 +70,7 @@ function UserPage(props) {
             </Drawer>
           </Grid>
         </Hidden>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={9} className={classes.contentWrapper}>
           <main className={classes.content}>
             <div className={classes.toolbar} />
             <Switch>
