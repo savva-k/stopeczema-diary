@@ -39,7 +39,7 @@ public class UserService {
 
     public UserDTO registerNewUser(UserDTO userDTO) throws UserExistsException {
         if (isUserAlreadyExists(userDTO)) {
-            throw new UserExistsException("UserEntity with this email already exists!");
+            throw new UserExistsException("UserEntity with this email or username already exists!");
         }
 
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
@@ -55,7 +55,7 @@ public class UserService {
         UserEntity userEntity = userRepository.findByEmail(email);
 
         if (userEntity == null) {
-            throw new UsernameNotFoundException("Invalid credentials");
+            throw new UsernameNotFoundException("User not found");
         }
 
         return modelMapper.map(userEntity, UserDTO.class);
@@ -79,7 +79,9 @@ public class UserService {
     }
 
     private boolean isUserAlreadyExists(UserDTO userDTO) {
-        return userRepository.findByEmail(userDTO.getEmail()) != null;
+        String email = userDTO.getEmail();
+        String username = userDTO.getUsername();
+        return userRepository.findByEmail(email) != null || userRepository.findByUsername(username) != null;
     }
 
     private List<Authority> generateDefaultAuthorities(UserEntity userEntity) {
