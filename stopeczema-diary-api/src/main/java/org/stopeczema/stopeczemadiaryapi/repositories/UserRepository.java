@@ -8,4 +8,5 @@ import org.stopeczema.stopeczemadiaryapi.beans.UserEntity;
  */
 public interface UserRepository extends CrudRepository<UserEntity, String> {
     UserEntity findByEmail(String email);
+    UserEntity findByUsername(String username);
 }
