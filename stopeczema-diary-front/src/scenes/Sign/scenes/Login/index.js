@@ -37,7 +37,7 @@ class Login extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
 
-  handleSubmit(event) {
+    handleSubmit(event) {
     event.preventDefault()
     const { login, password } = this.state
     const payload = { email: login, password: password }
@@ -73,12 +73,12 @@ class Login extends React.Component {
         <Grid container direction="column" alignItems="center" justify="space-between">
           <form className={classes.loginForm}>
             <Grid item>
-              <h1>Login</h1>
+              <h1>Sign in</h1>
             </Grid>
             <Grid item>
               <TextField
                 id="login"
-                label="Login"
+                label="Email"
                 value={this.state.login}
                 onChange={this.handleLoginChange}
                 className={classes.textField}
