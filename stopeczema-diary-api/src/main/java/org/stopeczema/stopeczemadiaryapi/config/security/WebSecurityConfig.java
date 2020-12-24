@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/users/search/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), secret))
-                .addFilter(new JWTAuthorizationFilter(authenticationManagerBean(), appUserDetailsService, secret));
+                .addFilter(new JWTAuthorizationFilter(authenticationManagerBean(), appUserDetailsService, secret))
+                .logout();
     }
 
     @Bean

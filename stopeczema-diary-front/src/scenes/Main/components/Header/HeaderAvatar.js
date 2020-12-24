@@ -8,6 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
+import NavLink from 'react-router-dom/NavLink'
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   paper: {
@@ -28,6 +30,10 @@ const styles = theme => ({
 })
 
 class HeaderAvatar extends React.Component {
+  componentDidMount() {
+    this.fetchUser()
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -45,15 +51,17 @@ class HeaderAvatar extends React.Component {
                 color="primary"
                 noWrap
               >
-                Gorlum666
+                {this.state ? `${this.state.user.firstName} ${this.state.user.lastName}` : 'guest'}
               </Typography>
               <Avatar alt="avatar" src="/static/images/gorl.jpg" />
             </Button>
             <Popper className={classes.popper} {...bindPopper(popupState)}>
               <Paper>
                 <MenuList role="menu">
-                  <MenuItem>Profile settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <NavLink exact activeClassName="active" to="/app/settings">
+                    <MenuItem>Profile settings</MenuItem>
+                  </NavLink>
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Paper>
             </Popper>
@@ -62,5 +70,17 @@ class HeaderAvatar extends React.Component {
       </PopupState>
     )
   }
+
+  fetchUser() {
+    fetch('http://localhost:8081/api/users/current', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => this.setState(data))
+  }
+
+  handleLogout() {
+    fetch('http://localhost:8081/api/logout', { credentials: 'include' })
+      .then(() => console.log('ok'))
+  }
+
 }
-export default withStyles(styles)(HeaderAvatar)
+export default withStyles(styles)(withRouter(HeaderAvatar))
