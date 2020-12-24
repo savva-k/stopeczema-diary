@@ -37,7 +37,7 @@ class Login extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
 
-    handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault()
     const { login, password } = this.state
     const payload = { email: login, password: password }
